@@ -1,11 +1,12 @@
 
 angular
-  .module('Todo',['ui.router'])
+  .module('Todo', ['ui.router']) //array means DEFINE THE MODULE
   .config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
-     $locationProvider.html5Mode(true);
+    
+    $locationProvider.html5Mode(true);
    
      $stateProvider.state('home', {
-       abstract: true;
+       abstract: true,
        template: '<ui-view/>'
      });
 
@@ -33,10 +34,11 @@ angular
 
 
 angular
-  .module('Todo', ["ui.router"])
+  .module('Todo')
   .controller('App.controller', ['$scope', function($scope) {
    
    console.log("app controler");
+   
     var testList = [] //[{todo: "list item 1", submitTime: 1, notes: ["note 1", "note 1.1"]},{todo: "list item 1", submitTime: 1, notes: []}];
     var completedList = []; // array for completed items
 
