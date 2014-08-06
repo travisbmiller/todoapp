@@ -4,21 +4,27 @@ angular
   .config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
      $locationProvider.html5Mode(true);
    
-     $stateProvider.state('todo', {
+     $stateProvider.state('home', {
+       abstract: true;
+       template: '<ui-view/>'
+     });
+
+
+     $stateProvider.state('home.todo', {
        url: '/',
        controller: 'App.controller',
        templateUrl: '/templates/todo.html'
      });
 
-     $stateProvider.state('completed', {
+     $stateProvider.state('home.completed', {
        url: '/completed',
-       controller: 'App.controller',
+       controller: 'Completed.controller',
        templateUrl: '/templates/completed.html'
      });
 
      $stateProvider.state('deleted', {
        url: '/deleted',
-       controller: 'App.controller',
+       controller: 'Deleted.controller',
        templateUrl: '/templates/completed.html'
      });
 
@@ -29,6 +35,7 @@ angular
 angular
   .module('Todo', ["ui.router"])
   .controller('App.controller', ['$scope', function($scope) {
+   
    console.log("app controler");
     var testList = [] //[{todo: "list item 1", submitTime: 1, notes: ["note 1", "note 1.1"]},{todo: "list item 1", submitTime: 1, notes: []}];
     var completedList = []; // array for completed items
