@@ -7,19 +7,19 @@ angular
      $stateProvider.state('todo', {
        url: '/',
        controller: 'App.controller',
-       templateUrl: 'todo.html'
+       templateUrl: '/templates/todo.html'
      });
 
      $stateProvider.state('completed', {
        url: '/completed',
        controller: 'App.controller',
-       templateUrl: 'completed.html'
+       templateUrl: '/templates/completed.html'
      });
 
      $stateProvider.state('deleted', {
        url: '/deleted',
        controller: 'App.controller',
-       templateUrl: 'completed.html'
+       templateUrl: '/templates/completed.html'
      });
 
   }]);

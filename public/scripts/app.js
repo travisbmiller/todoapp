@@ -1,40 +1,43 @@
 
-
-
 angular
-  .module('Todo', ['ui.router'])
+  .module('Todo',['ui.router'])
   .config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
-     
      $locationProvider.html5Mode(true);
    
      $stateProvider.state('todo', {
-      url: '/',
-      controller: 'App.controller',
-      templateUrl: 'todo.html'
-      });
+       url: '/',
+       controller: 'App.controller',
+       templateUrl: '/templates/todo.html'
+     });
 
      $stateProvider.state('completed', {
        url: '/completed',
-       controller: 'Completed.controller',
-       templateUrl: 'completed.html'
+       controller: 'App.controller',
+       templateUrl: '/templates/completed.html'
      });
 
-     
+     $stateProvider.state('deleted', {
+       url: '/deleted',
+       controller: 'App.controller',
+       templateUrl: '/templates/completed.html'
+     });
 
   }]);
 
 
 
 angular
-  .module('Todo')
-  .controller('App.controller', ['$scope', 'Data', function($scope, Data) {
-    console.log("app controller");
-    $scope.Data = Data;
+  .module('Todo', ["ui.router"])
+  .controller('App.controller', ['$scope', function($scope) {
+  
+    var testList = [] //[{todo: "list item 1", submitTime: 1, notes: ["note 1", "note 1.1"]},{todo: "list item 1", submitTime: 1, notes: []}];
+    var completedList = []; // array for completed items
 
-    $scope.list = Data.testList;
+    $scope.list = testList;
     $scope.values = {};
-    $scope.completedList = Data.completedList;
-    $scope.numberCompleted = Data.completedList.length;
+    $scope.completedList = completedList
+    $scope.numberCompleted = completedList.length;
+   
 
     $scope.submit = function($index){
       
@@ -49,7 +52,7 @@ angular
 
 
       // adding input to notes array + submittion time
-      Data.testList.unshift({todo: $scope.text, submitTime: datetime, showInput: false, notes: []});
+      testList.unshift({todo: $scope.text, submitTime: datetime, showInput: false, notes: []});
       
       // clearing out input after submittion
       $scope.text = '';
@@ -59,36 +62,35 @@ angular
 
     $scope.remove = function($index){
       // remoing item but it returns and array with an object
-      var item = Data.testList.splice($index,1);
+      var item = testList.splice($index,1);
       // removing array and just returning and object
       var completedItem = item.splice(0,1);
       // adding object to the beginning of completedItem array
-      Data.completedList = Data.completedList.concat(completedItem);
-      console.log(item);
-      console.log(completedItem);
+      completedList.unshift(completedItem);
+
     }
 
     $scope.submitNote = function($index) {
       // grabing the current textinput by $index number
       var textinput = $scope.values['field_' + $index];
       // adding textiput to the beginning notes array
-      Data.testList[$index].notes.unshift(textinput);
+      testList[$index].notes.unshift(textinput);
       // clearing out input field
       $scope.values['field_' + $index] = '';
       // hiding input field
-      Data.testList[$index].showInput = false;
+      testList[$index].showInput = false;
     }
 
     $scope.showInputOnClick = function( $index ) {
       
       // checking to see if its beening shown
-      if (Data.testList[$index].showInput === true) {
+      if (testList[$index].showInput === true) {
         // if its being shown hide it by setting to false
-        item = Data.testList[$index].showInput = false;
+        item = testList[$index].showInput = false;
       
       } else {
         // if its not being shown show it by setting it to true
-        item = Data.testList[$index].showInput = true;
+        item = testList[$index].showInput = true;
       
       }
 
@@ -96,53 +98,6 @@ angular
 
     }
 
-  }]);
 
-
-
-angular
-  .module('Todo')
-  .controller('Completed.controller', ['$scope','Data', function($scope, Data) {
-  
-    $scope.Data = Data;
-    $scope.completedList = Data.completedList.reverse();
-    
-    $scope.remove = function($index){
-      
-      var strconfirm = confirm("Are you sure you want to delete?");
-      if (strconfirm == true) { 
-        var item = Data.completedList.splice($index,1);}
-      // remoing item but it returns and array with an object
-     
-      // removing array and just returning and object
-      var deletedItem = item.splice(0,1);
-      // adding object to the beginning of completedItem array
-      Data.deletedList = Data.deletedList.concat(deletedItem);
-    }
 
   }]);
-
-angular
-  .module('Todo')
-  .controller('Delete.controller', ['$scope','Data', function($scope, Data) {
-  
-    $scope.deletedList = Data.deletedList.reverse();
-    $scope.completedList = Data.completedList;
-    
-    console.log(Data.deletedList);
-
-  }]);
-
-angular
-  .module('Todo')
-  .service('Data', function() {
-
-    return {
-      testList: [], 
-      completedList: [],
-      deletedList: [] 
-    }
-
- });
-
-
