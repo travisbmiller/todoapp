@@ -1,5 +1,3 @@
-
-
 angular
   .module('Todo', ['ui.router']) //array means DEFINE THE MODULE
   .config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
@@ -24,7 +22,7 @@ angular
        templateUrl: '/templates/completed.html'
      })
 
-     .state('deleted', {
+     .state('home.deleted', {
        url: '/deleted',
        controller: 'Deleted.controller',
        templateUrl: '/templates/completed.html'
@@ -44,7 +42,10 @@ angular
     $scope.values = {};
     
     $scope.completed = Data.completed;
+
+    $scope.deleted = Data.deleted;
     
+    var test = [];    
 
     $scope.submit = function($index){
       
@@ -70,7 +71,8 @@ angular
     $scope.remove = function($index){
       // removing item but it returns and array with an object [{}]
       var item = Data.todoList.splice($index,1); 
-      Data.completed = Data.completed.concat(item);
+      Data.completed.unshift(item);
+      console.log(Data.completed);
   
     }
 
@@ -111,6 +113,27 @@ angular
 
     $scope.completed = Data.completed;
 
+    $scope.remove = function($index){
+      // removing item but it returns and array with an object [{}]
+      var item = Data.completed.splice($index,1); 
+      Data.deleted.push(item);
+  
+    }
+
+
+
+}]);
+
+angular
+  .module('Todo')
+  .controller('Deleted.controller', ['$scope', 'Data', function($scope, Data) {
+
+    $scope.deleted = Data.deleted;
+
+    console.log("deleted")
+    console.log(Data.deleted)
+
+
 }]);
 
 angular
@@ -118,9 +141,9 @@ angular
   .factory('Data', function() {
 
   return {
-  todoList: [],
-  completed: [],
-  deletedList: []
+    todoList: [],
+    completed: [],
+    deleted: []
   }
 
 });

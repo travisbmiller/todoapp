@@ -1,5 +1,3 @@
-
-
 angular
   .module('Todo', ['ui.router']) //array means DEFINE THE MODULE
   .config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
