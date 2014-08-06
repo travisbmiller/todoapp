@@ -29,7 +29,7 @@ angular
 angular
   .module('Todo', ["ui.router"])
   .controller('App.controller', ['$scope', function($scope) {
-  
+   console.log("app controler");
     var testList = [] //[{todo: "list item 1", submitTime: 1, notes: ["note 1", "note 1.1"]},{todo: "list item 1", submitTime: 1, notes: []}];
     var completedList = []; // array for completed items
 
