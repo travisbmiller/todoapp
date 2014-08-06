@@ -1,0 +1,179 @@
+body {
+  background: #e1e1e1;
+}
+
+input {
+  height: 40px;
+  width: 100%;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  background: #e1e1e1;
+  text-indent: 20px;
+  color: #555;
+}
+
+input[type=text] {
+  outline: none;
+  font-family: sans-serif;
+  font-size: 18px;
+  color: #555;
+}
+
+input:focus {
+  border: 2px solid #555;
+}
+
+form {
+  position: relative;
+}
+
+.top {
+  padding-top: 30px;
+}
+
+.addMeBox {
+  border-left: none;
+  border: 1px solid #ccc;
+  display: inline-block;
+  width: 40px;
+  height: 44px;
+  top: -14px;
+  left: -5px;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  background: #555;
+}
+
+.addMeIcon {
+  position: relative;
+  display: inline-block;
+  top: 14px;
+  left: 12px;
+  color: #ccc;
+}
+
+
+.inputField {
+  width: 75%;
+  height: 50px;
+  margin: 0 auto;
+}
+
+.listOfItems {
+  width: 75%;
+  margin: 0 auto;
+  /*padding-top: 100px;*/
+  /*border: 1px solid;*/
+}
+
+.listItem {
+  height: 30px;
+/*  padding-bottom: 10px;*/
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  text-decoration: none;
+  list-style: none;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  color: #555;
+  font-family: sans-serif;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.listNote {
+  padding-top: 12px;
+  text-indent: 21px;
+  font-family: sans-serif;
+  font-size: 18px;
+  color: #555;
+}
+
+li .fa-check-circle {
+  position: relative;
+  font-size: 20px;
+  color: #ccc;
+  transition: 1s;
+}
+
+li .fa-check-circle:hover {
+  color: #4CFF4C;
+
+}
+
+.fa-times-circle {
+  position: relative;
+  font-size: 20px;
+  color: #ccc;
+  transition: 1s;
+}
+.fa-times-circle:hover {
+  color: red;
+}
+
+
+li {
+  position: relative;
+  line-height: 20px;
+}
+
+.icon {
+ position: absolute;
+ left: -30px;
+}
+
+.container {
+  padding-top: 150px;
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.inputNotes {
+  border: none;
+  padding-top: 10px;
+  height: 22px;
+}
+
+.inputNotes:focus{
+  border: none;
+}
+
+.linebreakcontainer {
+  width: 100%;
+  padding-top: 20px;
+  width: 75%;
+  margin: 0 auto;
+  /*border-bottom: 1px solid #ccc;*/
+}
+
+.button {
+  display: inline-block;
+  width: auto;
+  padding: 5px 20px 5px 20px;
+  background: #ddd;
+  margin: 0 0 5px 0;
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #555;
+  transition: background 1s;
+}
+
+.button:hover{
+  background: #ccc;
+}
+
+.titlebar {
+  border-bottom: 1px solid #ccc;
+  padding: 20px 0;
+  width: 75%;
+  margin: 0 auto;
+  font-family: sans-serif;
+  font-size: 18px;
+  color: #555;
+}

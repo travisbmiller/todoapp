@@ -1,9 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="Todo">
+
   <head>
-    <title></title>
+    <title>Todo</title>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="stylesheets/app.css">
   </head>
+
   <body>
-    <h1> Welcome to Bloc Jams! </h1>
-  </body> 
+    <div ng-controller="App.controller">
+  
+      <!-- Line Break under Todo Iput with nav --> 
+      <div class="linebreakcontainer">
+        <a ui-sref="todo"><div class="button"> Todo {{ list.length }} </div></a>
+        <a ui-sref="completed"><div class="button"> Completed {{ Data.completedList.length }} </div></a> 
+        <a ui-sref="deleted"><div class="button"> Deleted {{ Data.deletedList.length }} </div></a> 
+      </div>
+    </div>
+    <div ui-view></div>
+
+      
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+  </body>
+
+
 </html>

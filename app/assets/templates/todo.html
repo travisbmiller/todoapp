@@ -1,0 +1,29 @@
+<div class="inputField top">
+        <form ng-submit="submit()">
+          <input type="text" placeholder="What do you need to do?" name="input" ng-model="text"/>
+        </form>
+      </div> <!-- end of inputField -->
+
+      
+      <div class="listOfItems">
+        <ul data-ng-repeat="item in list track by $index">
+          <li class="listItem"><span class="icon"><i class="fa fa-check-circle" ng-click="remove($index)"></i></span> {{ item.todo }}  {{ item.submitTime }} <span><i ng-click="showInputOnClick($index)" class="fa fa-pencil"></i></span></li>
+          
+          <!-- Input for Notes -->
+          <form ng-submit="submitNote($index)" ng-show="item.showInput">
+              <input type="text" placeholder='add a note' name="inputNote" ng-model="values['field_' + $index]" class="inputNotes" />
+          </form>
+          
+          <ul data-ng-repeat="note in item.notes track by $index">
+            <li class="listNote"> {{ note }} </li>
+          </ul>
+
+      </div>
+      
+      test - {{ completedList.length }}
+      
+      <ul data-ng-repeat="completedItem in completedList track by $index">
+            <li> {{ completedItem[0].todo }} </li>
+          </ul>
+
+    </div>
