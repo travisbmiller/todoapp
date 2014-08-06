@@ -1,4 +1,5 @@
 
+
 angular
   .module('Todo', ['ui.router']) //array means DEFINE THE MODULE
   .config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
@@ -8,26 +9,26 @@ angular
      $stateProvider.state('home', {
        abstract: true,
        template: '<ui-view/>'
-     });
+     })
 
 
-     $stateProvider.state('home.todo', {
+     .state('home.todo', {
        url: '/',
        controller: 'App.controller',
        templateUrl: '/templates/todo.html'
-     });
+     })
 
-     $stateProvider.state('home.completed', {
+     .state('home.completed', {
        url: '/completed',
        controller: 'Completed.controller',
        templateUrl: '/templates/completed.html'
-     });
+     })
 
-     $stateProvider.state('deleted', {
+     .state('deleted', {
        url: '/deleted',
        controller: 'Deleted.controller',
        templateUrl: '/templates/completed.html'
-     });
+     })
 
   }]);
 
@@ -35,18 +36,15 @@ angular
 
 angular
   .module('Todo')
-  .controller('App.controller', ['$scope', function($scope) {
+  .controller('App.controller', ['$scope', 'Data', function($scope, Data) {
    
-   console.log("app controler");
-   
-    var testList = [] //[{todo: "list item 1", submitTime: 1, notes: ["note 1", "note 1.1"]},{todo: "list item 1", submitTime: 1, notes: []}];
-    var completedList = []; // array for completed items
 
-    $scope.list = testList;
+    $scope.list = Data.todoList;
+    
     $scope.values = {};
-    $scope.completedList = completedList
-    $scope.numberCompleted = completedList.length;
-   
+    
+    $scope.completed = Data.completed;
+    
 
     $scope.submit = function($index){
       
@@ -61,7 +59,7 @@ angular
 
 
       // adding input to notes array + submittion time
-      testList.unshift({todo: $scope.text, submitTime: datetime, showInput: false, notes: []});
+      Data.todoList.unshift({todo: $scope.text, submitTime: datetime, showInput: false, notes: []});
       
       // clearing out input after submittion
       $scope.text = '';
@@ -70,36 +68,34 @@ angular
     };
 
     $scope.remove = function($index){
-      // remoing item but it returns and array with an object
-      var item = testList.splice($index,1);
-      // removing array and just returning and object
-      var completedItem = item.splice(0,1);
-      // adding object to the beginning of completedItem array
-      completedList.unshift(completedItem);
-
+      // removing item but it returns and array with an object [{}]
+      var item = Data.todoList.splice($index,1); 
+      Data.completed = Data.completed.concat(item);
+  
     }
+
 
     $scope.submitNote = function($index) {
       // grabing the current textinput by $index number
       var textinput = $scope.values['field_' + $index];
       // adding textiput to the beginning notes array
-      testList[$index].notes.unshift(textinput);
+      Data.todoList[$index].notes.unshift(textinput);
       // clearing out input field
       $scope.values['field_' + $index] = '';
       // hiding input field
-      testList[$index].showInput = false;
+      Data.todoList[$index].showInput = false;
     }
 
     $scope.showInputOnClick = function( $index ) {
       
       // checking to see if its beening shown
-      if (testList[$index].showInput === true) {
+      if (Data.todoList[$index].showInput === true) {
         // if its being shown hide it by setting to false
-        item = testList[$index].showInput = false;
+        item = Data.todoList[$index].showInput = false;
       
       } else {
         // if its not being shown show it by setting it to true
-        item = testList[$index].showInput = true;
+        item = Data.todoList[$index].showInput = true;
       
       }
 
@@ -107,6 +103,24 @@ angular
 
     }
 
-
-
   }]);
+
+angular
+  .module('Todo')
+  .controller('Completed.controller', ['$scope', 'Data', function($scope, Data) {
+
+    $scope.completed = Data.completed;
+
+}]);
+
+angular
+  .module('Todo')
+  .factory('Data', function() {
+
+  return {
+  todoList: [],
+  completed: [],
+  deletedList: []
+  }
+
+});

@@ -7,16 +7,16 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/app.css">
   </head>
 
-  <body>
+  <body ng-controller="App.controller">
     
   
       <!-- Line Break under Todo Iput with nav --> 
       <div class="linebreakcontainer">
-        <a ui-sref="todo"><div class="button"> Todo {{ list.length }} </div></a>
-        <a ui-sref="completed"><div class="button"> Completed {{ Data.completedList.length }} </div></a> 
-        <a ui-sref="deleted"><div class="button"> Deleted {{ Data.deletedList.length }} </div></a> 
+        <a ui-sref="home.todo"><div class="button"> Todo {{ list.length }} </div></a>
+        <a ui-sref="home.completed"><div class="button"> Completed {{ completed.length }} </div></a> 
+        <a ui-sref="home.deleted"><div class="button"> Deleted {{ deleted.length }} </div></a> 
       </div>
-    
+    {{ completedtest }}
     <div ui-view></div>
     
       
