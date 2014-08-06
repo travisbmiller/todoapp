@@ -10,7 +10,7 @@ angular
      $stateProvider.state('todo', {
       url: '/',
       controller: 'App.controller',
-      templateUrl: '/templates/todo.html'
+      templateUrl: 'templates/todo.html'
       });
 
      $stateProvider.state('completed', {
@@ -32,7 +32,7 @@ angular
 angular
   .module('Todo')
   .controller('App.controller', ['$scope', 'Data', function($scope, Data) {
-  
+    console.log("app controller");
     $scope.Data = Data;
 
     $scope.list = Data.testList;
