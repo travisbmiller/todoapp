@@ -10,7 +10,7 @@ angular
      $stateProvider.state('todo', {
       url: '/',
       controller: 'App.controller',
-      templateUrl: 'templates/todo.html'
+      templateUrl: '/templates/todo.html'
       });
 
      $stateProvider.state('completed', {
@@ -19,11 +19,7 @@ angular
        templateUrl: '/templates/completed.html'
      });
 
-     $stateProvider.state('deleted', {
-       url: '/deleted',
-       controller: 'Delete.controller',
-       templateUrl: '/templates/deleted.html'
-     });
+     
 
   }]);
 
