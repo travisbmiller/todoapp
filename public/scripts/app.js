@@ -10,13 +10,13 @@ angular
      $stateProvider.state('todo', {
       url: '/',
       controller: 'App.controller',
-      templateUrl: '/templates/todo.html'
+      templateUrl: 'todo.html'
       });
 
      $stateProvider.state('completed', {
        url: '/completed',
        controller: 'Completed.controller',
-       templateUrl: '/templates/completed.html'
+       templateUrl: 'completed.html'
      });
 
      
