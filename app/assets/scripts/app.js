@@ -34,14 +34,14 @@ angular
 
 angular
   .module('Todo')
-  .controller('App.controller', ['$scope', 'Data', function($scope, Data) {
+  .controller('App.controller', ['$scope', 'Data', '$timeout', function($scope, Data, $timeout) {
    
 
     $scope.list = Data.todoList;
-    
+    $scope.completed = Data.completed;
     $scope.values = {};
     
-    $scope.completed = Data.completed;
+    
 
     $scope.deleted = Data.deleted;
     
@@ -71,11 +71,12 @@ angular
     $scope.remove = function($index){
       // removing item but it returns and array with an object [{}]
       var item = Data.todoList.splice($index,1); 
-      Data.completed.unshift(item);
-      console.log(Data.completed);
+      Data.completed = Data.completed.concat(item);
+      $timeout(function() { 
+        $scope.completed = Data.completed;
+      }, 100);
   
     }
-
 
     $scope.submitNote = function($index) {
       // grabing the current textinput by $index number
