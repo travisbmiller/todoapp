@@ -1,32 +1,42 @@
 angular
-  .module('Todo', ['ui.router']) //array means DEFINE THE MODULE
-  .config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
+  .module('Todo', [ //array means DEFINE THE MODULE
+    'ui.router'
+  ]) 
+  .config([
+    '$stateProvider', 
+    '$urlRouterProvider',
+    '$locationProvider', 
+    function ($stateProvider,
+              $urlRouterProvider,
+              $locationProvider) {
     
     $locationProvider.html5Mode(true);
    
-     $stateProvider.state('home', {
-       abstract: true,
-       template: '<ui-view/>'
-     })
+    $stateProvider
+      .state('home', {
+         abstract: true,
+         template: '<ui-view/>'
+       })
 
+       .state('home.todo', {
+         url: '/todo',
+         controller: 'App.controller',
+         templateUrl: '/templates/todo.html'
+       })
 
-     .state('home.todo', {
-       url: '/',
-       controller: 'App.controller',
-       templateUrl: '/templates/todo.html'
-     })
+       .state('home.completed', {
+         url: '/completed',
+         controller: 'Completed.controller',
+         templateUrl: '/templates/completed.html'
+       })
 
-     .state('home.completed', {
-       url: '/completed',
-       controller: 'Completed.controller',
-       templateUrl: '/templates/completed.html'
-     })
+       .state('home.deleted', {
+         url: '/deleted',
+         controller: 'Deleted.controller',
+         templateUrl: '/templates/completed.html'
+       });
 
-     .state('home.deleted', {
-       url: '/deleted',
-       controller: 'Deleted.controller',
-       templateUrl: '/templates/completed.html'
-     })
+    $urlRouterProvider.otherwise('/todo');
 
   }]);
 
@@ -34,29 +44,31 @@ angular
 
 angular
   .module('Todo')
-  .controller('App.controller', ['$scope', 'Data', '$timeout', function($scope, Data, $timeout) {
-   
+  .controller('App.controller', [
+    '$scope', 
+    'Data', 
+    '$timeout', 
+    function ($scope, 
+              Data, 
+              $timeout) {
+
+    var test = [];   
 
     $scope.list = Data.todoList;
     $scope.completed = Data.completed;
     $scope.values = {};
-    
-    
+    $scope.deleted = Data.deleted;   
 
-    $scope.deleted = Data.deleted;
-    
-    var test = [];    
-
-    $scope.submit = function($index){
+    $scope.submit = function ($index) {
       
       // getting current time and formating it
-      var currentdate = new Date(); 
-      var datetime = currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/" 
-                + currentdate.getFullYear() + " @ "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds();
+      var currentdate = new Date(),
+          datetime = currentdate.getDate() + "/" +
+                     (currentdate.getMonth()+1)  + "/"  +
+                     currentdate.getFullYear() + " @ " +
+                     currentdate.getHours() + ":" +
+                     currentdate.getMinutes() + ":" +
+                     currentdate.getSeconds();
 
 
       // adding input to notes array + submittion time
@@ -68,17 +80,20 @@ angular
       
     };
 
-    $scope.remove = function($index){
+    $scope.remove = function (item, $index) {
       // removing item but it returns and array with an object [{}]
-      var item = Data.todoList.splice($index,1); 
-      Data.completed = Data.completed.concat(item);
-      $timeout(function() { 
-        $scope.completed = Data.completed;
-      }, 100);
+      Data.todoList.splice($index, 1); 
+      // Adding item to Data.completed array by concetting two arrays
+      Data.completed.push(item);
+
+      console.log(Data.competed);
+
+      // If Angular doesn't automatically update your view, use $timeout
+      // $timeout(function(){$scope.completed = Data.completed});
   
     }
 
-    $scope.submitNote = function($index) {
+    $scope.submitNote = function ($index) {
       // grabing the current textinput by $index number
       var textinput = $scope.values['field_' + $index];
       // adding textiput to the beginning notes array
@@ -89,7 +104,7 @@ angular
       Data.todoList[$index].showInput = false;
     }
 
-    $scope.showInputOnClick = function( $index ) {
+    $scope.showInputOnClick = function ($index) {
       
       // checking to see if its beening shown
       if (Data.todoList[$index].showInput === true) {
@@ -110,13 +125,17 @@ angular
 
 angular
   .module('Todo')
-  .controller('Completed.controller', ['$scope', 'Data', function($scope, Data) {
+  .controller('Completed.controller', [
+    '$scope',
+    'Data',
+    function ($scope,
+              Data) {
 
     $scope.completed = Data.completed;
 
-    $scope.remove = function($index){
+    $scope.remove = function(item, $index){
       // removing item but it returns and array with an object [{}]
-      var item = Data.completed.splice($index,1); 
+      Data.completed.splice($index,1); 
       Data.deleted.push(item);
   
     }
