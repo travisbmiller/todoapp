@@ -13,30 +13,27 @@ angular
     $locationProvider.html5Mode(true);
    
     $stateProvider
-      .state('home', {
-         abstract: true,
-         template: '<ui-view/>'
-       })
+      
 
-       .state('home.todo', {
-         url: '/todo',
+       .state('todo', {
+         url: '/',
          controller: 'App.controller',
          templateUrl: '/templates/todo.html'
        })
 
-       .state('home.completed', {
-         url: '/completed',
-         controller: 'Completed.controller',
-         templateUrl: '/templates/completed.html'
-       })
+       // .state('home.completed', {
+       //   url: '/completed',
+       //   controller: 'Completed.controller',
+       //   templateUrl: '/templates/completed.html'
+       // })
 
-       .state('home.deleted', {
-         url: '/deleted',
-         controller: 'Deleted.controller',
-         templateUrl: '/templates/completed.html'
-       });
+       // .state('home.deleted', {
+       //   url: '/deleted',
+       //   controller: 'Deleted.controller',
+       //   templateUrl: '/templates/completed.html'
+       // });
 
-    $urlRouterProvider.otherwise('/todo');
+    $urlRouterProvider.otherwise('/');
 
   }]);
 
@@ -54,10 +51,31 @@ angular
 
     var test = [];   
 
-    $scope.list = Data.todoList;
-    $scope.completed = Data.completed;
+    $scope.list = Data.todo;
+    // $scope.completed = Data.completed;
     $scope.values = {};
-    $scope.deleted = Data.deleted;   
+    // $scope.deleted = Data.deleted;  
+    $showtodoinput = false; 
+    $showlistinput = false;
+    $scope.deleted = 0;
+    $scope.completed = 0;
+    $scope.allcount = Data.todo;
+
+    var updateCount = function (groupName) {
+
+      var count = 0,
+          i;
+
+      for (i = 0; i < Data.todo.length; i++){
+        if ( Data.todo[i].group === groupName) {
+          count = count + 1;
+        }
+      }
+      
+      
+      $scope[groupName] = count;
+    }
+
 
     $scope.submit = function ($index) {
       
@@ -115,103 +133,105 @@ angular
       }
 
       // adding input to notes array + submittion time
-      Data.todoList.unshift({todo: $scope.text, submitTime: formatDate(), showInput: false, notes: []});
+      Data.todo.unshift({title: $scope.text, group: 'all', submitTime: formatDate(), showInput: false, notes: []});
       
-
-      
-
-
-
       // clearing out input after submittion
       $scope.text = '';
 
+      //Hiding input after submit
+      $scope.showtodoinput = false;
       
     };
 
-    $scope.remove = function (item, $index) {
-      // removing item but it returns and array with an object [{}]
-      Data.todoList.splice($index, 1); 
-      // Adding item to Data.completed array by concetting two arrays
-      Data.completed.push(item);
-
-      console.log(Data.competed);
-
-      // If Angular doesn't automatically update your view, use $timeout
-      // $timeout(function(){$scope.completed = Data.completed});
-  
+    $scope.remove = function (item) {
+      // Changing group type
+      item.group = "deleted"; 
+      // Updating scope count for deleted items
+      updateCount(item.group); 
     }
 
-    $scope.submitNote = function ($index) {
-      // grabing the current textinput by $index number
-      var textinput = $scope.values['field_' + $index];
-      // adding textiput to the beginning notes array
-      Data.todoList[$index].notes.unshift(textinput);
-      // clearing out input field
-      $scope.values['field_' + $index] = '';
-      // hiding input field
-      Data.todoList[$index].showInput = false;
+    $scope.itemcompleted = function (item) {
+      // Changing group type
+      item.group = "completed";
+      // Updating scope count for completed items
+      updateCount(item.group);
     }
 
-    $scope.showInputOnClick = function ($index) {
-      
-      // checking to see if its beening shown
-      if (Data.todoList[$index].showInput === true) {
-        // if its being shown hide it by setting to false
-        item = Data.todoList[$index].showInput = false;
-      
-      } else {
-        // if its not being shown show it by setting it to true
-        item = Data.todoList[$index].showInput = true;
-      
-      }
+    // $scope.submitNote = function ($index) {
+    //   // grabing the current textinput by $index number
+    //   var textinput = $scope.values['field_' + $index];
+    //   // adding textiput to the beginning notes array
+    //   Data.todoList[$index].notes.unshift(textinput);
+    //   // clearing out input field
+    //   $scope.values['field_' + $index] = '';
+    //   // hiding input field
+    //   Data.todoList[$index].showInput = false;
+    // }
 
-      return item;
+    // $scope.showInputOnClick = function ($index) {
+      
+    //   // checking to see if its beening shown
+    //   if (Data.todoList[$index].showInput === true) {
+    //     // if its being shown hide it by setting to false
+    //     item = Data.todoList[$index].showInput = false;
+      
+    //   } else {
+    //     // if its not being shown show it by setting it to true
+    //     item = Data.todoList[$index].showInput = true;
+      
+    //   }
 
-    }
+    //   return item;
+
+    // }
 
   }]);
 
-angular
-  .module('Todo')
-  .controller('Completed.controller', [
-    '$scope',
-    'Data',
-    function ($scope,
-              Data) {
+// angular
+//   .module('Todo')
+//   .controller('Completed.controller', [
+//     '$scope',
+//     'Data',
+//     function ($scope,
+//               Data) {
 
-    $scope.completed = Data.completed;
+//     $scope.completed = Data.completed;
 
-    $scope.remove = function(item, $index){
-      // removing item but it returns and array with an object [{}]
-      Data.completed.splice($index,1); 
-      Data.deleted.push(item);
+//     $scope.remove = function(item, $index){
+//       // removing item but it returns and array with an object [{}]
+//       Data.completed.splice($index,1); 
+//       Data.deleted.push(item);
   
-    }
+//     }
 
 
 
-}]);
+// }]);
 
-angular
-  .module('Todo')
-  .controller('Deleted.controller', ['$scope', 'Data', function($scope, Data) {
+// angular
+//   .module('Todo')
+//   .controller('Deleted.controller', ['$scope', 'Data', function($scope, Data) {
 
-    $scope.deleted = Data.deleted;
+//     $scope.deleted = Data.deleted;
 
-    console.log("deleted")
-    console.log(Data.deleted)
+//     console.log("deleted")
+//     console.log(Data.deleted)
 
 
-}]);
+// }]);
 
 angular
   .module('Todo')
   .factory('Data', function() {
 
   return {
-    todoList: [],
-    completed: [],
-    deleted: []
+    todo: [
+    {title: "this item is all",group: "all", sub: []},
+    {title: "This item is completed",group: "all", sub: []},
+    {title: "This item is completed",group: "all", sub: []}
+    ],
+    todogroup: []
+    
   }
 
 });

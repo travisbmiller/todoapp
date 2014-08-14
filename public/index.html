@@ -3,6 +3,7 @@
 
   <head>
     <title>Todo</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="stylesheets/app.css">
   </head>
@@ -10,14 +11,150 @@
   <body ng-controller="App.controller">
     
   
-      <!-- Line Break under Todo Iput with nav --> 
-      <div class="linebreakcontainer">
-        <a ui-sref="home.todo"><div class="button"> Todo {{ list.length }} </div></a>
-        <a ui-sref="home.completed"><div class="button"> Completed {{ completed.length }} </div></a> 
-        <div class="button"> Deleted {{ deleted.length }} </div>
+      <!-- Header -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="nav col-md-12">
+          <!-- <div class="col-md-3 col-md-offset-9">Completed </div>
+        </div> -->
+        count for deleted {{ deleted }}
       </div>
-    {{ completedtest }}
-    <div ui-view></div>
+      
+      <div class="row">
+      
+        <!-- Side Bar -->
+        <div class="side col-md-4">
+
+          <div class="row">
+
+            <div></div>
+
+
+            <!-- Side Bar Todo Group -->
+            <div class="test col-sm-10 col-sm-offset-1">
+
+              <div class="todogrouptitle">Todo Lists
+                <div ng-click="showlistinput = true" class="addnewgroup"><i class="fa fa-plus-circle"></i> Add New List</div>
+              </div>
+              
+              <input ng-show="showlistinput" class="addgroup" placeholder=" New Todo List"></input>
+
+              <div class="status cf">
+                <div class="deleted">Deleted 
+                  <div class="statuscountboxcompleted">
+                    <span class="statusnumbercount">{{ deleted }}</span>
+                  </div>
+                </div> 
+                
+                <div class="completed">Completed 
+                  <div class="statuscountboxdeleted">
+                    <span class="statusnumbercount">{{ completed }}</span>
+                  </div>
+                </div> 
+
+              </div>
+
+              <div class="todogroup">All
+                <div class="todogroupcountbox">
+                  <span class="groupnumbercount">{{ allcount.length }}</span>
+                </div>
+              </div>
+              
+              <div class="todogroup">
+                
+                <i class="fa fa-minus-circle detelegrouptitle"></i>
+                <span class="deletetooltip">Delete List
+                  <div class="tooltipc"></div>
+                </span>
+                Group 1
+                
+                <div class="todogroupcountbox">
+                  <span class="groupnumbercount">12</span>
+                </div>
+              </div>
+            
+              <div class="todogroup">
+                <i class="fa fa-minus-circle detelegrouptitle"></i>
+                <span class="deletetooltip">Delete List
+                  <div class="tooltipc"></div>
+                </span>
+                Group 1
+                
+                <div class="todogroupcountbox">
+                  <span class="groupnumbercount">12</span>
+                </div>
+              </div>
+
+              
+             
+             <!-- End of Todo Groups -->
+
+            </div><!-- End Of Side Nav -->
+
+          </div>
+
+        </div> <!-- End of Side Bar -->
+         
+          
+          
+
+        <!-- Main Content-->
+        <div class="main col-md-6">
+          <!-- Main Top -->
+          <div class="maintop">
+            
+            <div class="title">
+              <h3 class="titletext">Todo List: <span class="todolist">All</span> </h3> 
+              <div ng-click="showtodoinput = true" class="addnewgroup"><i class="fa fa-plus-circle"></i> Add New Todo</div>
+              
+              <form ng-submit="submit()" ng-show="showtodoinput">
+                <input class="additem" type="text" placeholder="New Todo Item" name="input" ng-model="text"/>
+              </form>
+
+            </div>
+          </div> <!-- End of Main Top -->
+
+
+          <!-- Main Content -->
+          <div class="maincontent" >
+            
+            <div class="item" data-ng-repeat="item in list | filter:{ group: 'all' }"> 
+             
+              <i ng-click="remove(item)" class="fa fa-minus-circle deteletodoitem itemicon"></i>
+              <span class="deleteitemtooltip">Deleted Item
+                <div class="deleteditemtooltipc"></div>
+              </span>
+              
+              <i ng-click="itemcompleted(item)" class="fa fa-check-circle completedtodoitem itemicon"></i>
+              <span class="completetooltip">Mark as Complete
+                <div class="itemtooltipc"></div>
+              </span>
+              
+              <i class="fa fa-plus-circle addtastitem itemicon"></i>
+              <span class="addtooltip">Add a Tast
+                <div class="additemtooltipc"></div>
+              </span>
+
+              {{item.title}} {{item.group}} {{item.submitTime}}
+              <div class="itemtime">Mon 2:34pm</div>
+            
+            </div>
+
+            
+            
+          </div><!-- End of Main Content -->
+
+        </div> <!-- End of Main -->
+      
+          
+
+    </div>
+
+    <!-- <div class="row">
+      <div class="footer col-md-12">App By Travis Miller
+        <div><i class="fa fa-github"></i></div>
+      </div> 
+    </div> -->
     
       
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>

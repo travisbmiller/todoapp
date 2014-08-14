@@ -1,4 +1,4 @@
-body {
+/*body {
   background: #e1e1e1;
 }
 
@@ -71,7 +71,7 @@ form {
     Styles for list items
     _______________________ */
 
-.listItem {
+/*.listItem {
   height: 20px;
   margin-top: 10px;
   border: 1px solid #ccc;
@@ -183,7 +183,7 @@ li {
   /*border-bottom: 1px solid #ccc;*/
 }
 
-.button {
+/*.button {
   display: inline-block;
   width: auto;
   padding: 5px 20px 5px 20px;
@@ -207,4 +207,483 @@ li {
   font-family: sans-serif;
   font-size: 18px;
   color: #555;
+}*/
+
+
+
+body {
+  position: relative;
+}
+
+.nav {
+  background: #fff;
+  height: 65px;
+  border-top: 5px solid #406878;
+}
+
+.side {
+  height: 100%;
+  background: white;
+}
+
+.main {
+ 
+  background: #fff; 
+}
+
+.test {
+  background: white;
+  height: auto;
+}
+
+.title {
+  height: 100%;
+  /*border-bottom: 1px solid #ccc;*/  
+}
+
+.titletext {
+  margin-bottom: 10px;
+  margin-top: -5px;
+  color: #406878;
+}
+
+.todolist {
+  font-size: 20px;
+  color: #aaa;
+}
+
+.todogrouptitle {
+  font-size: 18px;
+  margin: 0 0 20px 0;
+  position: relative;
+
+}
+
+.addnewgroup {
+  margin-bottom: 10px; 
+  position: absolute;
+  right: 2px;
+  top: -5px;
+  font-size: 12px; 
+  padding: 10px 20px;
+  border-radius: 4px; 
+  color: #ccc;
+
+}
+
+.fa-plus-circle:hover {
+  color: #406878;
+}
+
+.addnewgroup:hover {
+  background: #efefef;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: #406878;
+}
+
+.todogroup {
+  height: 60px;
+  /*border-top: 1px solid #ddd;*/
+  padding-top: 20px;
+  position: relative;
+  transition: 0.3s;
+}
+
+.todogroup:hover {
+  background: #efefef;
+  border-radius: 5px;
+  padding-left: 20px;
+  transition: 1s;
+}
+
+
+.todogroup:hover .detelegrouptitle{
+  color: #406878;
+}
+
+
+.addgroup {
+  width: 100%;
+  height: 30px;
+  outline: none;
+  border: none;
+  border-top: none;
+  border-left: none;
+  border-right: none; 
+  font-size: 14px;
+  margin-bottom: 25px;
+  background: #ddd;
+  border-radius: 4px;
+  text-indent: 10px;
+  padding: 5px 0;
+}
+
+.additem {
+  width: 70%;
+  height: 30px;
+  outline: none;
+  border: none;
+  border-top: none;
+  border-left: none;
+  border-right: none; 
+  font-size: 14px;
+  margin-bottom: 15px;
+  background: #ddd;
+  border-radius: 4px;
+  text-indent: 10px;
+  padding: 5px 0;
+  margin-top: 14px; 
+}
+
+.todogroupcountbox {
+  width: 25px;
+  height: 25px;
+  background: #406878;
+  position: absolute;
+  right: 20px;
+  top: 18px;
+  border-radius: 4px;
+
+}
+
+.groupnumbercount {
+  display: inline-block;
+  width: 25px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 14px;
+  padding-top: 2px;
+  color: #FFF;
+}
+
+.detelegrouptitle {
+  position: absolute;
+  left: -20px;
+  top: 23px;
+  color: #ddd;
+  transition: 1s;
+}
+
+
+.deletetooltip {
+  opacity: 0;
+  position: absolute;
+  bottom: 95px;
+  left: -35px;
+  display: block;
+  padding: 10px 10px;
+  background: #406878;
+  border-radius: 5px;
+  transition: all 0.2s;
+  color: white;
+}
+
+.tooltipc {
+  position: absolute;
+  bottom: -5px;
+  left: 10px;
+  width: 0;
+  height: 0;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #406878;
+  border-left: 10px solid transparent;
+}
+
+.detelegrouptitle:hover ~ .deletetooltip {
+  opacity: 1;
+  bottom: 55px;
+  transition: all 0.9s;
+}
+
+
+.status {
+  padding: 20px 18px 20px 0;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+
+
+
+.statuscountboxcompleted {
+  width: 20px;
+  height: 20px;
+  background: #406878;
+  position: absolute;
+  right: 5px;
+  top: -2px;
+  border-radius: 4px;
+}
+
+.deleted {
+  position: relative;
+  display: inline-block;
+ /* border: 1px solid;*/
+  padding-right: 40px;
+  padding-left: 5px;
+  font-size: 12px;
+  float: right;
+}
+
+.completed {
+  position: relative;
+  display: inline-block;
+  /*border: 1px solid;*/
+  padding-right: 40px;
+  font-size: 12px;
+  float: right;
+}
+
+.statuscountboxdeleted {
+  width: 20px;
+  height: 20px;
+  background: #406878;
+  position: absolute;
+  right: 5px;
+  top: -2px;
+  border-radius: 4px;
+
+}
+
+.statusnumbercount {
+  display: inline-block;
+  width: 20px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 14px;
+  padding-right: 1px;
+  color: #FFF;
+}
+
+.item {
+  /*background: #fafafa;*/
+  width: 100%;
+  margin: 10px 0 5px 0;
+  position: relative;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  position: relative;
+
+}
+
+.todotext{
+  /*border: 1px solid;*/
+
+}
+
+
+
+.itemtime {
+  font-size: 12px;
+  color: #ccc;
+  margin-bottom: 2px;
+
+}
+
+.itemicon {
+  font-size: 18px;
+  color: #ddd;
+  top: 15px;
+  position: absolute;
+  transition: 0.8s;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  
+}
+
+
+.sublist {
+  margin-left: 10px;
+  font-size: 12px;
+  padding: 2px 0;
+}
+
+.sublistcompleteicon {
+  color: #ddd;
+  margin-right: 5px;
+  font-size: 14px;
+}
+ .checked {
+  color: #406878;
+}
+
+.addtastitem {
+  right: 30px;
+}
+
+.deteletodoitem {
+  right: 10px;
+}
+
+.deteletodoitem:hover {
+  color: #F54B4B;
+}
+
+
+
+.completedtodoitem {
+  right: 50px;
+}
+
+.completedtodoitem:hover {
+  color: #6AEC63;
+}
+
+
+
+
+
+.itemtooltipc {
+  position: absolute;
+  bottom: -5px;
+  left: 100px;
+  width: 0;
+  height: 0;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #406878;
+  border-left: 10px solid transparent;
+}
+
+
+.completetooltip {
+  opacity: 1;
+  position: absolute;
+  top: -95px;
+  right: 36px;
+  display: block;
+  padding: 10px 10px;
+  background: #406878;
+  border-radius: 5px;
+  transition: z-index 0.1s, opacity 0.5s, top 0.8s;
+  color: white;
+  z-index: -100;
+}
+
+.completedtodoitem:hover ~ .completetooltip {
+  z-index: 10;
+  opacity: 1;
+  top: -35px;
+  /*transition: z-index 0.1s, opacity 0.5s, bottom 0.8s;*/
+  
+}
+
+.deleteitemtooltip{
+  opacity: 0;
+  position: absolute;
+  top: -95px;
+  right: 4px;
+  display: block;
+  padding: 10px 10px;
+  background: #406878;
+  border-radius: 5px;
+  transition: z-index 0.1s, opacity 0.5s, top 0.8s;
+  z-index: -100;
+  color: white;
+}
+
+.deleteditemtooltipc {
+  position: absolute;
+  bottom: -5px;
+  left: 73px;
+  width: 0;
+  height: 0;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #406878;
+  border-left: 10px solid transparent;
+}
+
+.deteletodoitem:hover ~ .deleteitemtooltip {
+  opacity: 1;
+  top: -35px;
+  z-index: 10;
+}
+
+
+.addtooltip {
+  opacity: 0;
+  position: absolute;
+  top: -95px;
+  right: 23px;
+  display: block;
+  padding: 10px 10px;
+  background: #406878;
+  border-radius: 5px;
+  transition: z-index 0.1s, opacity 0.5s, top 0.8s;
+  z-index: -100;
+  color: white;
+}
+
+.additemtooltipc {
+  position: absolute;
+  bottom: -5px;
+  left: 60px;
+  width: 0;
+  height: 0;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #406878;
+  border-left: 10px solid transparent;
+}
+
+.addtastitem:hover ~ .addtooltip {
+  opacity: 1;
+  top: -35px;
+  z-index: 10;
+}
+
+
+.footer {
+  width: 100%;
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  text-align: center;
+  font-size: 14px;
+  color: #ccc;
+  padding: 20px 0;
+  border-top: 1px solid #ccc;
+  background: #406878;
+  color: #92B2B2;
+}
+
+
+.fa-github {
+  margin-top: 10px;
+  font-size: 18px;
+  transition: 1s;
+  color: #92B2B2;
+}
+
+.fa-github:hover {
+  color: #fafafa;
+}
+
+
+
+.userpic {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  right: 30px;
+  top: 15px;
+  border-radius: 50%;
+  border: 2px solid #406878;
+}
+
+.userpic img {
+  max-width: 100%;
+  border-radius: 50%;
+
+}
+
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
 }
