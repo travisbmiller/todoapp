@@ -63,17 +63,65 @@ angular
       
       // getting current time and formating it
       var currentdate = new Date(),
-          datetime = currentdate.getDate() + "/" +
-                     (currentdate.getMonth()+1)  + "/"  +
-                     currentdate.getFullYear() + " @ " +
-                     currentdate.getHours() + ":" +
+          datetime = currentdate.getHours() + ":" +
                      currentdate.getMinutes() + ":" +
-                     currentdate.getSeconds();
+                     currentdate.getSeconds(),
+       dateFormmat = currentdate.getMonth() + "/" +
+                     currentdate.getDay() + 
+                     currentdate.getDate();
 
+
+      var formatDate = function() {
+        var currentdate = new Date(),
+                weekDay = currentdate.getDay(),
+              monthDate = currentdate.getDate(), 
+                          dateFormatted,
+                          suffix;
+        
+          switch (weekDay) {
+            case 0:
+              weekDay = "Mon"
+              break;
+            case 1:
+              weekDay = "Tues"
+              break;
+            case 3:
+              weekDay = "Wed"
+              break;
+            case 4:
+              weekDay = "Thur"
+              break;
+            case 5:
+              weekDay = "Fri"
+              break;
+            case 6:
+              weekDay = "Sat"
+              break
+          } 
+
+          switch (monthDate) {
+            case '1': case '21': case '31': suffix = 'st'; break;
+            case '2': case '22': suffix = 'nd'; break;
+            case '3': case '23': suffix = 'rd'; break;
+            default: suffix = 'th';
+          }
+
+          
+
+          dateFormatted = weekDay + " " + monthDate + suffix;
+
+          return dateFormatted;
+        
+      }
 
       // adding input to notes array + submittion time
-      Data.todoList.unshift({todo: $scope.text, submitTime: datetime, showInput: false, notes: []});
+      Data.todoList.unshift({todo: $scope.text, submitTime: formatDate(), showInput: false, notes: []});
       
+
+      
+
+
+
       // clearing out input after submittion
       $scope.text = '';
 

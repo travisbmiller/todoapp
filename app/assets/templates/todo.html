@@ -6,9 +6,15 @@
 
       
       <div class="listOfItems">
-        <ul data-ng-repeat="item in list track by $index">
-          <li class="listItem"><span class="icon"><i class="fa fa-check-circle" ng-click="remove($index)"></i></span> {{ item.todo }}  {{ item.submitTime }} <span><i ng-click="showInputOnClick($index)" class="fa fa-pencil"></i></span></li>
-          
+        <div data-ng-repeat="item in list track by $index">
+          <div class="listItem">
+            <span class="icon"><i class="fa fa-check-circle" ng-click="remove($index)"></i></span>
+            <div class="todoItem"> {{ item.todo }} </div> 
+            <div class="submitTime"> {{ item.submitTime }} + {{ item.submitDate }} </div> 
+            <span><i ng-click="showInputOnClick($index)" class="fa fa-pencil"></i></span>
+          </div>
+        </div>  
+      </div>
           <!-- Input for Notes -->
           <form ng-submit="submitNote($index)" ng-show="item.showInput">
               <input type="text" placeholder='add a note' name="inputNote" ng-model="values['field_' + $index]" class="inputNotes" />
