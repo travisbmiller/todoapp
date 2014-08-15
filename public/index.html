@@ -3,21 +3,31 @@
 
   <head>
     <title>Todo</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/app.css">
   </head>
 
   <body ng-controller="App.controller">
     
-  
+    <div ng-show="showlayover">
+      <div class="overlay"></div>
+      <div class="modal">
+        <div ng-click="showlayover = false"class="modalexit"><i class="fa fa-times"></i></div>
+        <i class="fa fa-exclamation-triangle"></i>
+        <span class="modalmaintext">{{ modalText }}</span>
+        <div class="lineone">There is already a list by that name. 
+          <span class="linetwo"> Please create a new list with a different name.</span>
+        </div>
+      </div>
+    </div>
       <!-- Header -->
     <div class="container-fluid">
       <div class="row">
         <div class="nav col-md-12">
           <!-- <div class="col-md-3 col-md-offset-9">Completed </div>
         </div> -->
-        count for deleted {{ deleted }}
+        
       </div>
       
       <div class="row">
@@ -36,53 +46,49 @@
               <div class="todogrouptitle">Todo Lists
                 <div ng-click="showlistinput = true" class="addnewgroup"><i class="fa fa-plus-circle"></i> Add New List</div>
               </div>
-              
-              <input ng-show="showlistinput" class="addgroup" placeholder=" New Todo List"></input>
+
+              <!-- Input for Todo List -->
+                <form ng-submit="submitList()"> 
+                  <input ng-show="showlistinput" class="addgroup" placeholder=" New Todo List" ng-model="inputList"></input>
+                </form>
 
               <div class="status cf">
-                <div class="deleted">Deleted 
+                <div ng-click="group = 'deleted'" class="deleted">Deleted 
                   <div class="statuscountboxcompleted">
-                    <span class="statusnumbercount">{{ deleted }}</span>
+                    <span class="statusnumbercount">{{ lengths.deleted || 0 }}</span>
                   </div>
                 </div> 
                 
-                <div class="completed">Completed 
+                <div ng-click="group = 'completed'" class="completed">Completed 
                   <div class="statuscountboxdeleted">
-                    <span class="statusnumbercount">{{ completed }}</span>
+                    <span class="statusnumbercount">{{ lengths.completed || 0 }}</span>
                   </div>
                 </div> 
 
               </div>
-
-              <div class="todogroup">All
-                <div class="todogroupcountbox">
-                  <span class="groupnumbercount">{{ allcount.length }}</span>
+              <div>
+                <div ng-click="group = 'all'" class="todogroup">All
+                  <div class="todogroupcountbox">
+                    <span class="groupnumbercount">{{ alllengths || 0 }}</span>
+                  </div>
                 </div>
-              </div>
-              
-              <div class="todogroup">
                 
-                <i class="fa fa-minus-circle detelegrouptitle"></i>
-                <span class="deletetooltip">Delete List
-                  <div class="tooltipc"></div>
-                </span>
-                Group 1
-                
-                <div class="todogroupcountbox">
-                  <span class="groupnumbercount">12</span>
+                <div ng-repeat="item in todoList">
+                  
+                  <div ng-click="$parent.group = item" class="todogroup">
+                    
+                    <i ng-click="removeListItem(item)" class="fa fa-minus-circle detelegrouptitle"></i>
+                    <span class="deletetooltip">Delete List
+                      <div class="tooltipc"></div>
+                    </span>
+                    {{ item | capfirst }}
+                    
+                    <div class="todogroupcountbox">
+                      <span class="groupnumbercount">{{ lengths[item] || 0}}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            
-              <div class="todogroup">
-                <i class="fa fa-minus-circle detelegrouptitle"></i>
-                <span class="deletetooltip">Delete List
-                  <div class="tooltipc"></div>
-                </span>
-                Group 1
                 
-                <div class="todogroupcountbox">
-                  <span class="groupnumbercount">12</span>
-                </div>
               </div>
 
               
@@ -104,9 +110,10 @@
           <div class="maintop">
             
             <div class="title">
-              <h3 class="titletext">Todo List: <span class="todolist">All</span> </h3> 
+              <h3 class="titletext">Todo List: <span class="todolist">{{ group | capfirst }}</span> </h3> 
               <div ng-click="showtodoinput = true" class="addnewgroup"><i class="fa fa-plus-circle"></i> Add New Todo</div>
               
+              <!-- Input for Todo -->
               <form ng-submit="submit()" ng-show="showtodoinput">
                 <input class="additem" type="text" placeholder="New Todo Item" name="input" ng-model="text"/>
               </form>
@@ -118,7 +125,7 @@
           <!-- Main Content -->
           <div class="maincontent" >
             
-            <div class="item" data-ng-repeat="item in list | filter:{ group: 'all' }"> 
+            <div class="item" data-ng-repeat="item in list | filter:{ group: group }"> 
              
               <i ng-click="remove(item)" class="fa fa-minus-circle deteletodoitem itemicon"></i>
               <span class="deleteitemtooltip">Deleted Item
@@ -135,8 +142,8 @@
                 <div class="additemtooltipc"></div>
               </span>
 
-              {{item.title}} {{item.group}} {{item.submitTime}}
-              <div class="itemtime">Mon 2:34pm</div>
+              {{item.title}} {{item.group}} 
+              <div class="itemtime">{{item.submitTime}}</div>
             
             </div>
 
@@ -157,8 +164,8 @@
     </div> -->
     
       
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="/scripts/angular.min.js"></script>
+  <script type="text/javascript" src="/scripts/uirouter.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
   </body>
 

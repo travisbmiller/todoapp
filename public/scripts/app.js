@@ -49,7 +49,53 @@ angular
               Data, 
               $timeout) {
 
-    var test = [];   
+    var test = [];
+
+    
+    
+
+
+
+    $scope.$watch('list', function(list){
+
+      var lengths = {},
+          allLengths = {},
+          todolength = Data.todo.length,
+          i;
+
+      for(i in list){
+        if(lengths[list[i].group] === undefined){
+          lengths[list[i].group] = 1;
+        }
+        else if(lengths[list[i].group] !== undefined){
+          lengths[list[i].group]++;
+        }
+      }
+
+
+      for (i in list) {
+       if (list[i].group === "completed") {
+        todolength--;
+      } else if (list[i].group === "deleted") {
+        todolength--;
+      }
+       
+      }
+
+      $timeout(function(){
+
+        $scope.alllengths = todolength;
+
+      });
+
+
+      $timeout(function(){
+
+        $scope.lengths = lengths;
+
+      });
+
+    }, true);
 
     $scope.list = Data.todo;
     // $scope.completed = Data.completed;
@@ -59,25 +105,60 @@ angular
     $showlistinput = false;
     $scope.deleted = 0;
     $scope.completed = 0;
-    $scope.allcount = Data.todo;
+    $scope.group = "all"
+    $scope.allcount; 
+    $scope.todoList = Data.todogroup;
+    $scope.showlayover = false;
+    
 
-    var updateCount = function (groupName) {
-
+    var countall = function () {
       var count = 0,
           i;
 
       for (i = 0; i < Data.todo.length; i++){
-        if ( Data.todo[i].group === groupName) {
+        if ( Data.todo[i].group !== "completd" && "deleted" ) {
           count = count + 1;
         }
       }
-      
-      
-      $scope[groupName] = count;
+
+      allcount = count;
     }
 
+    // $scope.group = function (item) {
+    //   $scope.group = eval(item);
+    // }
 
-    $scope.submit = function ($index) {
+
+    $scope.submitList = function () {
+       
+      if( Data.todogroup.indexOf($scope.inputList) !== -1 ) {
+        $scope.showlayover = true;
+        $scope.modalText = $scope.inputList;
+        $scope.inputList = '';
+        
+
+      } else {
+
+        if (!$scope.inputList ) {
+
+        $scope.showlistinput = false;
+       
+       }
+      
+       if ($scope.inputList ){
+         Data.todogroup.unshift($scope.inputList);
+        console.log(Data.todogroup);
+       $scope.inputList = '';
+       $scope.showlistinput = false;
+       }
+
+
+    }
+      
+      
+  }
+
+    $scope.submit = function () {
       
       // getting current time and formating it
       var currentdate = new Date(),
@@ -93,6 +174,9 @@ angular
         var currentdate = new Date(),
                 weekDay = currentdate.getDay(),
               monthDate = currentdate.getDate(), 
+                  hours = currentdate.getHours(),
+                   mins = currentdate.getMinutes(),
+              timeofday = "am",       
                           dateFormatted,
                           suffix;
         
@@ -117,44 +201,64 @@ angular
               break
           } 
 
-          switch (monthDate) {
-            case '1': case '21': case '31': suffix = 'st'; break;
-            case '2': case '22': suffix = 'nd'; break;
-            case '3': case '23': suffix = 'rd'; break;
-            default: suffix = 'th';
+          if ( hours >= 13 ) {
+            timeofday = "pm";
           }
 
+          if (hours >= 13) {
+            hours = hours - 12;
+          }
           
 
-          dateFormatted = weekDay + " " + monthDate + suffix;
+
+          dateFormatted = weekDay + " " + hours + ":" + mins + timeofday;
 
           return dateFormatted;
         
       }
 
       // adding input to notes array + submittion time
-      Data.todo.unshift({title: $scope.text, group: 'all', submitTime: formatDate(), showInput: false, notes: []});
+      Data.todo.unshift({title: $scope.text, group: $scope.group, submitTime: formatDate(), showInput: false, notes: []});
       
       // clearing out input after submittion
       $scope.text = '';
 
       //Hiding input after submit
       $scope.showtodoinput = false;
-      
+ 
     };
 
     $scope.remove = function (item) {
       // Changing group type
       item.group = "deleted"; 
       // Updating scope count for deleted items
-      updateCount(item.group); 
+       
     }
 
     $scope.itemcompleted = function (item) {
       // Changing group type
       item.group = "completed";
-      // Updating scope count for completed items
-      updateCount(item.group);
+      
+    }
+
+    $scope.removeListItem = function (item) {
+      
+      // This is slice all the objects of out Data.todo that have the same group name
+
+      i = Data.todo.length;
+      while (i--) { 
+        if (Data.todo[i].group === item) {
+          Data.todo.splice(i,1)
+        }
+      }
+      
+      // This is remove the list name from Data.todogroup
+
+      Data.todogroup.splice(Data.todogroup.indexOf(item),1);
+
+      // Change $scope.group = back to all
+      $scope.group = "all";
+
     }
 
     // $scope.submitNote = function ($index) {
@@ -228,10 +332,20 @@ angular
     todo: [
     {title: "this item is all",group: "all", sub: []},
     {title: "This item is completed",group: "all", sub: []},
-    {title: "This item is completed",group: "all", sub: []}
+    {title: "This item is completed",group: "home", sub: []}
     ],
-    todogroup: []
+    todogroup: ["all","tom","home"]
     
   }
 
 });
+
+angular
+  .module('Todo')
+  .filter('capfirst', function() {
+ return function(input, scope) {
+ if (input!=null)
+ input = input.toLowerCase();
+ return input.substring(0,1).toUpperCase()+input.substring(1);
+ }
+});  

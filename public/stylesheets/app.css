@@ -211,6 +211,10 @@ li {
 
 
 
+html, body {
+  min-height: 100%;
+}
+
 body {
   position: relative;
 }
@@ -222,7 +226,7 @@ body {
 }
 
 .side {
-  height: 100%;
+  height: 1000px;
   background: white;
 }
 
@@ -676,6 +680,103 @@ body {
   border-radius: 50%;
 
 }
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.2);  
+}
+
+
+.modal {
+    width: 400px;
+    height: 200px;
+    /*line-height: 200px;*/
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
+    background-color: #406878;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 101; /* 1px higher than the overlay layer */
+}
+
+.modal i  {
+ font-size: 40px;
+ color: #92B2B2;
+ margin-top: 40px;
+ margin-bottom: 10px;
+ display: block;
+ /*position: relative;
+ top: 30px;
+ left: 45%;*/
+ 
+}
+
+.lineone {
+  color: #92B2B2;
+  font-size: 18px;
+  font-weight: 800;
+  /*position: absolute;
+  top: 90px;*/
+  
+  width: 90%;
+  margin: 0 auto;
+
+}
+
+.linetwo {
+  color: #92B2B2;
+  font-size: 14px;
+  display: block;
+  font-weight: 300;
+}
+
+
+
+.modalexit i {
+font-size: 30px;
+position: absolute;
+top: -34px;
+left: 8px;
+transition: 0.6s;
+}
+
+.modalexit i:hover {
+color: #406878;
+}
+
+.modalexit {
+z-index: 120;
+width: 40px;
+height: 40px;
+background: white;
+position: absolute;
+top: -20px;
+right: -10px;
+border-radius: 20px;
+}
+
+.modalmaintext {
+ font-size: 26px;
+ font-weight: 800;
+ color:#92B2B2;
+}
+
+/*.overlayconatiner {
+ margin: auto;
+ width: 300px;
+ height: 300px;
+ background: white;
+ /*position: relative;*/
+ /*margin-top: 50%;*/
+ /*z-index: 120;*/
 
 
 .cf:before,
