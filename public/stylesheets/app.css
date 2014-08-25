@@ -528,7 +528,7 @@ body {
 
 
 .completedtodoitem {
-  right: 50px;
+  right: 30px;
 }
 
 .completedtodoitem:hover {
@@ -555,7 +555,7 @@ body {
   opacity: 1;
   position: absolute;
   top: -95px;
-  right: 36px;
+  right: 16px;
   display: block;
   padding: 10px 10px;
   background: #406878;

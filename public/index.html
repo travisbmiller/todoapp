@@ -25,8 +25,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="nav col-md-12">
-          <!-- <div class="col-md-3 col-md-offset-9">Completed </div>
-        </div> -->
+          <img src="/images/todologosm.png">
         
       </div>
       
@@ -73,7 +72,7 @@
                   </div>
                 </div>
                 
-                <div ng-repeat="item in todoList">
+                <div ng-repeat="item in todoList track by $index">
                   
                   <div ng-click="$parent.group = item" class="todogroup">
                     
@@ -111,7 +110,7 @@
             
             <div class="title">
               <h3 class="titletext">Todo List: <span class="todolist">{{ group | capfirst }}</span> </h3> 
-              <div ng-click="showtodoinput = true" class="addnewgroup"><i class="fa fa-plus-circle"></i> Add New Todo</div>
+              <div ng-click="showtodoinput = true" class="addnewgroup" ng-show="group !== 'deleted'"><i class="fa fa-plus-circle"></i> Add New Todo</div>
               
               <!-- Input for Todo -->
               <form ng-submit="submit()" ng-show="showtodoinput">
@@ -127,22 +126,17 @@
             
             <div class="item" data-ng-repeat="item in list | filter:{ group: group }"> 
              
-              <i ng-click="remove(item)" class="fa fa-minus-circle deteletodoitem itemicon"></i>
+              <i ng-click="remove(item)" ng-show="group !== 'deleted'" class="fa fa-minus-circle deteletodoitem itemicon"></i>
               <span class="deleteitemtooltip">Deleted Item
                 <div class="deleteditemtooltipc"></div>
               </span>
               
-              <i ng-click="itemcompleted(item)" class="fa fa-check-circle completedtodoitem itemicon"></i>
+              <i ng-click="itemcompleted(item)" ng-show="group !== 'deleted'" class="fa fa-check-circle completedtodoitem itemicon"></i>
               <span class="completetooltip">Mark as Complete
                 <div class="itemtooltipc"></div>
               </span>
-              
-              <i class="fa fa-plus-circle addtastitem itemicon"></i>
-              <span class="addtooltip">Add a Tast
-                <div class="additemtooltipc"></div>
-              </span>
 
-              {{item.title}} {{item.group}} 
+              {{item.title | capfirst}} 
               <div class="itemtime">{{item.submitTime}}</div>
             
             </div>

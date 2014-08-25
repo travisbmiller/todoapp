@@ -105,128 +105,124 @@ angular
     $showlistinput = false;
     $scope.deleted = 0;
     $scope.completed = 0;
-    $scope.group = "all"
+    $scope.group = "All"
     $scope.allcount; 
     $scope.todoList = Data.todogroup;
     $scope.showlayover = false;
     
 
-    var countall = function () {
-      var count = 0,
-          i;
-
-      for (i = 0; i < Data.todo.length; i++){
-        if ( Data.todo[i].group !== "completd" && "deleted" ) {
-          count = count + 1;
-        }
-      }
-
-      allcount = count;
-    }
-
-    // $scope.group = function (item) {
-    //   $scope.group = eval(item);
-    // }
-
-
+    
     $scope.submitList = function () {
        
-      if( Data.todogroup.indexOf($scope.inputList) !== -1 ) {
-        $scope.showlayover = true;
-        $scope.modalText = $scope.inputList;
-        $scope.inputList = '';
-        
+      if ($scope.inputList === undefined) {
 
+          $scope.showlistinput = false;
+      
       } else {
 
-        if (!$scope.inputList ) {
+        if ( Data.todogroup.indexOf($scope.inputList.toLowerCase()) !== -1 || $scope.inputList.toLowerCase() == 'all' ) {
+          
+          $scope.showlayover = true;
+          $scope.modalText = $scope.inputList;
+          $scope.inputList = '';
+          
+        } else {
 
-        $scope.showlistinput = false;
-       
+          if ($scope.inputList == '') {
+
+            $scope.showlistinput = false;
+         
+         }
+        
+         if ($scope.inputList ) {
+           
+            Data.todogroup.unshift($scope.inputList.toLowerCase());
+            $scope.inputList = '';
+            $scope.showlistinput = false;
+         }
+        }  
        }
-      
-       if ($scope.inputList ){
-         Data.todogroup.unshift($scope.inputList);
-        console.log(Data.todogroup);
-       $scope.inputList = '';
-       $scope.showlistinput = false;
-       }
-
-
-    }
       
       
   }
 
     $scope.submit = function () {
       
-      // getting current time and formating it
-      var currentdate = new Date(),
-          datetime = currentdate.getHours() + ":" +
-                     currentdate.getMinutes() + ":" +
-                     currentdate.getSeconds(),
-       dateFormmat = currentdate.getMonth() + "/" +
-                     currentdate.getDay() + 
-                     currentdate.getDate();
-
-
-      var formatDate = function() {
-        var currentdate = new Date(),
-                weekDay = currentdate.getDay(),
-              monthDate = currentdate.getDate(), 
-                  hours = currentdate.getHours(),
-                   mins = currentdate.getMinutes(),
-              timeofday = "am",       
-                          dateFormatted,
-                          suffix;
-        
-          switch (weekDay) {
-            case 0:
-              weekDay = "Mon"
-              break;
-            case 1:
-              weekDay = "Tues"
-              break;
-            case 3:
-              weekDay = "Wed"
-              break;
-            case 4:
-              weekDay = "Thur"
-              break;
-            case 5:
-              weekDay = "Fri"
-              break;
-            case 6:
-              weekDay = "Sat"
-              break
-          } 
-
-          if ( hours >= 13 ) {
-            timeofday = "pm";
-          }
-
-          if (hours >= 13) {
-            hours = hours - 12;
-          }
-          
-
-
-          dateFormatted = weekDay + " " + hours + ":" + mins + timeofday;
-
-          return dateFormatted;
-        
-      }
-
-      // adding input to notes array + submittion time
-      Data.todo.unshift({title: $scope.text, group: $scope.group, submitTime: formatDate(), showInput: false, notes: []});
       
-      // clearing out input after submittion
-      $scope.text = '';
 
-      //Hiding input after submit
-      $scope.showtodoinput = false;
- 
-    };
+      if ($scope.text === undefined || $scope.text === '' ) {
+        $scope.showtodoinput = false;
+
+      } else {
+
+        // getting current time and formating it
+        var currentdate = new Date(),
+            datetime = currentdate.getHours() + ":" +
+                       currentdate.getMinutes() + ":" +
+                       currentdate.getSeconds(),
+         dateFormmat = currentdate.getMonth() + "/" +
+                       currentdate.getDay() + 
+                       currentdate.getDate();
+
+
+        var formatDate = function() {
+          var currentdate = new Date(),
+                  weekDay = currentdate.getDay(),
+                monthDate = currentdate.getDate(), 
+                    hours = currentdate.getHours(),
+                     mins = currentdate.getMinutes(),
+                timeofday = "am",       
+                            dateFormatted,
+                            suffix;
+          
+            switch (weekDay) {
+              case 0:
+                weekDay = "Mon"
+                break;
+              case 1:
+                weekDay = "Tues"
+                break;
+              case 3:
+                weekDay = "Wed"
+                break;
+              case 4:
+                weekDay = "Thur"
+                break;
+              case 5:
+                weekDay = "Fri"
+                break;
+              case 6:
+                weekDay = "Sat"
+                break
+            } 
+
+            if ( hours >= 13 ) {
+              timeofday = "pm";
+            }
+
+            if (hours >= 13) {
+              hours = hours - 12;
+            }
+            
+
+
+            dateFormatted = weekDay + " " + hours + ":" + mins + timeofday;
+
+            return dateFormatted;
+          
+        }
+
+        // adding input to notes array + submittion time
+        Data.todo.unshift({title: $scope.text, group: $scope.group, submitTime: formatDate(), showInput: false, notes: []});
+        
+        // clearing out input after submittion
+        $scope.text = '';
+
+        //Hiding input after submit
+        $scope.showtodoinput = false;
+   
+      };
+    }
 
     $scope.remove = function (item) {
       // Changing group type
@@ -329,12 +325,8 @@ angular
   .factory('Data', function() {
 
   return {
-    todo: [
-    {title: "this item is all",group: "all", sub: []},
-    {title: "This item is completed",group: "all", sub: []},
-    {title: "This item is completed",group: "home", sub: []}
-    ],
-    todogroup: ["all","tom","home"]
+    todo: [],
+    todogroup: []
     
   }
 
